@@ -1,25 +1,34 @@
 package com.example.Subscription.service;
 
+import com.example.Subscription.exception.NullFiledException;
 import com.example.Subscription.mapper.SubscriptionMapper;
 import com.example.Subscription.model.dto.SubscriptionCacheDto;
 import com.example.Subscription.model.entity.SubscriptionEntity;
 import com.example.Subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import tools.jackson.databind.ObjectMapper;
 
-import java.util.Optional;
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
+
     public SubscriptionEntity save(SubscriptionEntity subscriptionEntity) {
         return  subscriptionRepository.save(subscriptionEntity);
     }
 
     public SubscriptionCacheDto getSubscription(String login) {
-        return SubscriptionMapper.toSubscriptionCacheDto(subscriptionRepository.findByLogin(login));
+        if (login != null) {
+            log.info("Check login {} exists to DB", login);
+            SubscriptionCacheDto subscriptionCacheDto = SubscriptionMapper
+                    .toSubscriptionCacheDto(subscriptionRepository.findByLogin(login));
+            log.info("Get Subscription CacheDto {}", subscriptionCacheDto);
+            return subscriptionCacheDto;
+        } else {
+            throw new NullFiledException("Login is null");
+        }
     }
 }

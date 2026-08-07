@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-outbox-table
+      author: misha
+
+      changes:
+        - createTable:
+            tableName: outbox_table
+
+            columns:
+              - column:
+                  name: login
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: payload
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: attempts
+                  type: integer
+                  constraints:
+                    nullable: true
+              - column:
+                  name: typeRun
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time_to_live
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
