@@ -1,35 +1,34 @@
 databaseChangeLog:
-
   - changeSet:
-      id: create-user-subscription-entity
+      id: 003-create-table
       author: misha
 
       changes:
-
         - createTable:
-            tableName: subscription_entity
-
+            tableName: shedlock
             columns:
               - column:
-                  name: event_id
-                  type: uuid
+                  name: name
+                  type: VARCHAR(255)
                   constraints:
                     primaryKey: true
                     nullable: false
+
               - column:
-                  name: login
-                  type: varchar(255)
+                  name: lock_until
+                  type: TIMESTAMP(3)
                   constraints:
                     nullable: false
 
               - column:
-                  name: subscription_type
-                  type: varchar(50)
+                  name: locked_at
+                  type: TIMESTAMP(3)
                   constraints:
                     nullable: false
 
               - column:
-                  name: expires_at
-                  type: timestamp with time zone
+                  name: locked_by
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
+

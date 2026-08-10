@@ -7,9 +7,21 @@ spring:
     username: POSTGRES
     password: 12345
 
+  kafka:
+    bootstrap-servers: localhost:29092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
   jpa:
     hibernate:
       ddl-auto: none
+outbox:
+  check-lock:
+    attempts: 300
+    timeout: PT3M
+
 eureka:
   client:
     service-url:
@@ -21,6 +33,14 @@ server:
   port: 8090
 
 scheduler:
+  subscription-expiration-rate: 60s
   fixed-rate: 3s
+
+app:
+  kafka:
+    topics:
+      file-upload-subscription: file-upload-subscription-topic
+      file-failed-subscription: file-failed-subscription-topic
+      file-update-dlt-subscription: file-update-dlt-subscription-topic
 
 

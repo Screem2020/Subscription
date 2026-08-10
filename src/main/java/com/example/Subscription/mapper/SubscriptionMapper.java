@@ -12,6 +12,7 @@ public class SubscriptionMapper {
     public static SubscriptionCacheDto toSubscriptionCacheDto(SubscriptionEntity subscriptionEntity) {
         log.info("SubscriptionMapper toSubscriptionCacheDto");
         return new SubscriptionCacheDto(
+                subscriptionEntity.getEventId(),
                 subscriptionEntity.getLogin(),
                 subscriptionEntity.getSubscriptionType(),
                 subscriptionEntity.getExpiresAt());
@@ -20,6 +21,7 @@ public class SubscriptionMapper {
     public static SubscriptionEntity toSubscriptionEntity(SubscriptionCacheDto subscriptionCacheDto) {
         log.info("SubscriptionMapper toSubscriptionEntity");
         return new SubscriptionEntity(
+                subscriptionCacheDto.getEventId(),
                 subscriptionCacheDto.getLogin(),
                 subscriptionCacheDto.getSubscriptionType(),
                 subscriptionCacheDto.getExpiresAt());

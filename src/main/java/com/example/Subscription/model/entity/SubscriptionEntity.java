@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -15,8 +16,9 @@ import java.time.Instant;
 @Table(name = "subscription_entity")
 public class SubscriptionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID eventId;
     private String login;
+    @Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
     private Instant expiresAt;
 }
