@@ -17,6 +17,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
 outbox:
   check-lock:
     attempts: 300
@@ -33,8 +34,16 @@ server:
   port: 8090
 
 scheduler:
-  subscription-expiration-rate: 60s
-  fixed-rate: 3s
+  subscription-retry-rate: 60s
+  outbox-fixed-rate: 3s
+
+shedlock:
+  outbox:
+    lock-at-least-for: PT1M
+    lock-at-most-for: PT5M
+  subscription-retry:
+    lock-at-least-for: PT1M
+    lock-at-most-for: PT5M
 
 app:
   kafka:

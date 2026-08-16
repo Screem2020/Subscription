@@ -4,6 +4,7 @@ import com.example.Subscription.enums.FileRunSubscription;
 import com.example.Subscription.enums.StatusEvent;
 import com.example.Subscription.model.entity.OutboxTable;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,11 +22,11 @@ public class SchedulerRetryOutbox {
     private final DispatcherEvent dispatcherEvent;
 
     @Transactional
-    @Scheduled(fixedRateString = "${scheduler.fixed-rate}")
+    @Scheduled(fixedRateString = "${scheduler.outbox-fixed-rate}")
     @SchedulerLock(
-            name = "TaskSchedulerSubscription",
-            lockAtLeastFor = "PT1M",
-            lockAtMostFor = "PT5M"
+            name = "outbox",
+            lockAtLeastFor = "${shedlock.outbox.lock-at-least-for}",
+            lockAtMostFor = "${shedlock.outbox.lock-at-most-for}"
     )
     public void SchedulerJob() {
         List<OutboxTable> pageFilterList = outboxManager.checkTimeSubscription();
@@ -46,9 +47,9 @@ public class SchedulerRetryOutbox {
                     outboxTable.setStatusEvent(StatusEvent.FAILED);
                 } else {
                     log.info("Event:  {}  with status: {} send Completed topic", outboxTable.getEventId(), outboxTable.getStatusEvent());
-                    outboxTable.setFileRunSubscription(FileRunSubscription.COMPLETED);
                 }
                 dispatcherEvent.dispatcher(outboxTable);
+                outboxTable.setFileRunSubscription(FileRunSubscription.COMPLETED);
 
             } catch (Exception e) {
                 outboxTable.setFileRunSubscription(FileRunSubscription.RUN);

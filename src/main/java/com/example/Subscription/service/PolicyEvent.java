@@ -32,6 +32,6 @@ public class PolicyEvent {
     }
 
     public boolean checkPolicyLimitRetry(OutboxTable outboxTable) {
-        return checkTimeLimit(outboxTable) && isAttemptsLimitReached(outboxTable);
+        return checkTimeLimit(outboxTable) || isAttemptsLimitReached(outboxTable);
     }
 }

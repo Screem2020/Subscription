@@ -5,6 +5,7 @@ import com.example.Subscription.model.entity.SubscriptionEntity;
 import com.example.Subscription.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,7 +23,12 @@ public class SubscriptionExpirationScheduler {
     private final ProcessService processService;
 
     @Transactional
-    @Scheduled(fixedRateString = "${scheduler.subscription-expiration-rate}")
+    @Scheduled(fixedRateString = "${scheduler.subscription-retry-rate}")
+    @SchedulerLock(
+            name = "subscription-retry",
+            lockAtLeastFor = "${shedlock.subscription-retry.lock-at-least-for}",
+            lockAtMostFor = "${shedlock.subscription-retry.lock-at-most-for}"
+    )
     public void checkExpiredSubscriptions() {
         try {
             Pageable pageable = PageRequest.of(0, 100);
