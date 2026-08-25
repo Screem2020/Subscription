@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-outbox-table
+      author: misha
+
+      changes:
+        - createTable:
+            tableName: outbox_table
+
+            columns:
+              - column:
+                  name: event_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: payload
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: attempts
+                  type: integer
+                  constraints:
+                    nullable: true
+              - column:
+                  name: type_run
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: file_run_subscription
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: status_event
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time_to_live
+                  type: timestamp
+                  constraints:
+                    nullable: true
+

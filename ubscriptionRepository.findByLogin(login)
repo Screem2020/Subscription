@@ -1,0 +1,27 @@
+[33mcommit 146cef034271d3ec665566efd39a9dbf6ccc5631[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: Mihael <Churin_s@inbox.ru>
+Date:   Tue Aug 4 00:20:29 2026 +0200
+
+    Get information for subscription
+    
+    - Create controller with response dto
+    - Add Feigth clent for SubscriptionService
+    - Implemented endpoint get Subscription
+
+[33mcommit f6ee0eb41611d35da0d6d6acfb45eba63afb3b35[m
+Author: Mihael <Churin_s@inbox.ru>
+Date:   Tue Aug 4 00:19:35 2026 +0200
+
+    Create mapperfor dto and entity
+
+[33mcommit 2c9eec454596c88b4c2a096e30bd42ceef8cc3af[m
+Author: Mihael <Churin_s@inbox.ru>
+Date:   Sat Aug 1 20:37:12 2026 +0200
+
+    Connect to project DB and Eureka
+
+[33mcommit 166ab25e4221d0f9d75c51c11053b8d9393a9b97[m[33m ([m[1;32mmaster[m[33m)[m
+Author: Mihael <Churin_s@inbox.ru>
+Date:   Sat Aug 1 17:44:11 2026 +0200
+
+    first commit

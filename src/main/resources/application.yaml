@@ -1,3 +1,55 @@
 spring:
   application:
     name: Subscription
+
+  datasource:
+    url: jdbc:postgresql://localhost:5435/subscription
+    username: POSTGRES
+    password: 12345
+
+  kafka:
+    bootstrap-servers: localhost:29092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+outbox:
+  check-lock:
+    attempts: 300
+    timeout: PT3M
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+server:
+  port: 8090
+
+scheduler:
+  subscription-retry-rate: 60s
+  outbox-fixed-rate: 3s
+
+shedlock:
+  outbox:
+    lock-at-least-for: PT1M
+    lock-at-most-for: PT5M
+  subscription-retry:
+    lock-at-least-for: PT1M
+    lock-at-most-for: PT5M
+
+app:
+  kafka:
+    topics:
+      file-upload-subscription: file-upload-subscription-topic
+      file-failed-subscription: file-failed-subscription-topic
+      file-update-dlt-subscription: file-update-dlt-subscription-topic
+
+

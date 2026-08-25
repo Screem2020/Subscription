@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: subscription
+
+    environment:
+      POSTGRES_USER: POSTGRES
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: subscription
+
+    ports:
+      - "127.0.0.1:5435:5432"
+
+    volumes:
+      - subscription-data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+volumes:
+  subscription-data:
+
+networks:
+  backend-network:
+    external: true
